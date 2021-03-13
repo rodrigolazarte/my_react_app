@@ -1,5 +1,6 @@
-import logo from './logo.svg';
 import { Component } from 'react';
+
+import  {CardList} from './components/card-list/card-list.component';
 import './App.css';
 
 class App extends Component {
@@ -7,19 +8,20 @@ class App extends Component {
     super();
 
     this.state = {
-      name: "Hola soy martin aprendiendo react!",
-      age: 26
+      monsters: []
     };
+  }
+
+  componentDidMount() {
+    fetch('https://jsonplaceholder.typicode.com/users')
+    .then(response => response.json())
+    .then(users => this.setState({ monsters: users}))
   }
 
   render() {
     return (
       <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>{this.state.name} y mi edad es {this.state.age}</p>
-        <button onClick = {() => this.setState({ name: "Hola soy martin apretando un boton", age: 27})}>Press Me!</button>
-      </header>
+        <CardList monsters={this.state.monsters} />            
     </div>
     )
   }
